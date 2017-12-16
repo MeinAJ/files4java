@@ -14,3 +14,7 @@ make MALLOC=libc
 启动 src/redis-server & （添加 &执行后台启动 ）
 后台启动也可以通过修改redis.conf文件，daemonize no 改为 daemonize yes
 关闭 src/redis-cli shutdown 
+
+
+关闭linux的防火墙
+	

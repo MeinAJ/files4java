@@ -1,0 +1,119 @@
+查看隐藏文件
+		ll
+
+查看一个程序是否运行中
+		ps -ef|grep tomcat
+
+终止进程
+		kill -9 3604
+
+
+删除文件夹及其内部文件
+		rm -rf folerName
+删除空目录
+		rmdir ./java
+
+
+显示动态日志信息
+		tail -f catalina.out
+查看文件末尾10行
+		tail -n 10 catalina.out
+
+查看ip
+		ifconfig
+
+
+创建多层文件夹
+		mkdir -p /usr/local/1/2/3
+		p:表示parents,递归创建目录
+创建单层文件夹
+		mkdir newFolderName
+修改文件名
+		mv oldFileName newFileName
+
+
+查看当前目录
+		pwd
+		pwd:print working directory
+查看上一次的查看的当前目录
+		!pwd
+
+
+复制文件夹所有内容到另一个文件夹
+		cp -r ./java/src ./java-copy/
+		r:recursive表示递归,一层一层的复制
+重启后失效方式:
+		开启防火墙
+				service iptables start
+		查看防火墙状态
+				service iptables status
+		关闭防火墙
+				service iptables stop
+重启后生效:
+		开启防火墙
+				chkconfig iptables on
+		关闭防火墙
+				chkconfig iptables off
+防火墙开放端口号
+		/sbin/iptables -I INPUT -p tcp --dport 8080 -j ACCEPT
+
+
+解压/压缩
+		tar zxvf FileName.tar.gz
+				z:gz接尾压缩文件
+				x:表示解压出文件
+				v:显示解压操作过程
+				f:指定文件
+		tar zxvf FileName.tar.gz -C ./FolderName
+				C:指定解压目录
+
+		另一种解压/压缩方式:
+				解压:
+						unzip FileName.zip
+				压缩:
+						zip FileName.zip FolderName
+
+vim/vi
+		插入
+				i
+		保存退出
+				Esc-->:-->wq
+		强制退出
+				Esc-->:-->q!
+		末尾
+				G
+		删除一行
+				dd
+		定位
+				/apache:按n跳到下一个，shift+n上一个
+
+		出现卡死
+				ctrl+S:加锁
+				ctrl+Q:解锁
+
+		定位字符串
+				-->:/字符串
+				-->n
+					n:表示下一个字符串
+
+
+设置mysql能够远程访问
+
+		GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+		flush privileges;
+
+批处理
+		-->创建一个可执行文件,filename.sh
+		-->比如执行这个批处理文件,先调至根目录下,再进入solr目录下
+		-->内容:
+				第一行:cd ~
+				第二行:cd /usr/local/solr
+		-->将filename.sh文件设置成可执行文件
+				chmod u+x filename.sh
+		-->执行filename.sh
+				./filename.sh
+		-->ok
+
+执行批处理文件权限不足
+		chmod u+x filename.sh
+

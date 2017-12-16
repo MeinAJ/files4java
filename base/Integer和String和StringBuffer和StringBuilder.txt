@@ -1,0 +1,25 @@
+Integer
+	常用方法
+			-->Integer.parseInt()
+					-->字符串转成整型
+			-->Integer.valueOf()
+					-->字符串转成整型
+	易错点
+			Integer a = 127;
+			Integer b = 127;
+			Integer c = 128;
+			Integer d = 128;
+
+			syso(a==b)---true		
+				jvm在编译期间,对常量放入常量池中,Integer属于Byte,Short,Integer,Long,Character中的一种,同时值小于127大于-128时,会将常量放入常量池中,那么a和b都是从常量池中取,地址肯定是一样的
+
+			syso(c==d)---false
+				参照上面的原因
+
+	关于new对象
+			-->直接申请一块堆区域存储
+
+
+String
+	常用方法
+

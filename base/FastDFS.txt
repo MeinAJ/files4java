@@ -1,0 +1,30 @@
+FastDfS原理
+		干什么的?
+			-->图片服务器,图片与项目分离
+
+		组成部分?
+			-->Client+Tracker Server+Storage Server
+
+			Client?
+				-->用于发送请求和接收参数
+			Tracker Server?
+				-->调度器或者分配器,用于接受Storage Server的状态信息,根据状态信息,特定算法哪一个Storage Server适合服务,返回Storage Server的ip和端口给Client
+			Storage Server?
+				-->特定算法给文件取名字,并且存储文件路径信息
+					格式(group1/M00/02/44/sdfHKJHFKHkkhdHFKKJH3748.sh),存储图片至磁盘,并返回文件路径信息给Client
+
+			/M00:Storage Server的虚拟路径,与磁盘选项store_path*对应,store_path0则是M00,以此类推
+			/02/44:创建的两级目录
+			/sdfHKJHFKHkkhdHFKKJH3748.sh:根据ip,时间戳等创建的文件名
+
+		上传流程?
+			-->Tracker Server获取Storage Server信息
+			-->Client发送上传请求
+			-->Tracker Server根据刚才获取的信息,查询给用且适合的Storager
+			-->Tracker Server返回Storager的ip和端口号
+			-->client根据ip和端口号上传文件至Storage Server
+			-->Storage Server生成文件的路径信息和将文件写入磁盘
+			-->返回路径信息和文件名给client
+			-->Client将文件路径和文件名存储进数据库
+
+		下载路径域上传流程相同的原理.

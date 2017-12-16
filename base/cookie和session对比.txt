@@ -1,0 +1,67 @@
+cookie和session对比
+
+			cookie:
+					内容:
+							-->key/value/过期时间/路径/域
+							-->路径和域构成cookie的作用域
+
+					作用:
+							-->用户名和密码记录,用于自动登陆功能
+							-->根据用户名记录商品浏览记录等
+
+					缺点:
+							-->每次请求都会将作用域大于或者等于该请求的cookie携带至HTTP请求中,增加了流量
+							-->cookie是明文传输,存在风险
+							-->大小限制,存储内容较少
+					生命周期:
+							-->如果不设置过期时间,就表示该cookie是浏览器会话cookie,关闭浏览器就消失,这种是保存在内存中
+							-->设置过期时间,就会将cookie存放在disk中,直到操作设定过期时间
+
+			session
+					作用:
+							-->一次会话,记录用户信息,是否登陆
+							-->根据用户名,记录购物车功能
+					缺点:
+							-->每个用户都会创建一个session,服务器承受不住
+
+			session和cookie的结合:
+
+					session如何结合?何时创建?
+									cookie方式:
+
+											-->如果请求带来的cookie中有sessionid,那么不用创建session
+											-->如果请求中cookie中没有带来sessionid,就创建一个session对象和对应的sessionod,再通过响应返回该key-value的cookie给浏览器
+											-->HttpServletRequest.getSession()或者访问jsp页面,但是这个jsp页面没有在将商品页面中设置<% @page session="false"%>,那么访问jsp时,就会创建session对象.
+
+									URL重写的实现机制是:
+											-->先判断当前的 Web 组件是否启用 Session，如果没有启用 Session，直接返回参数 url。 
+											-->再判断客户端浏览器是否支持 Cookie，如果支持 Cookie，直接返回参数 url；
+											-->如果不支持 Cookie，就在参数 url 中加入 Session ID 信息，然后返回修改后的 url.
+													-->HttpServletResponse.encodeURL(String URL),重写这个url,将sessionid="XkKfnDufk-KDvsvKhsKHFsn"添加到URL中,然后改写页面的
+													<a href=“maillogin.jsp“>
+													<a href="<%=response.encodeURL('maillogin.jsp')%>">
+											-->为每个响应中添加sessionid="XkKfnDufk-KDvsvKhsKHFsn"键值对信息,在jsp页面中就可以利用response.encodeURL('maillogin.jsp')获取到响应的sessionid,并且每次超链接发送的时候都会将sessionid传递过去
+
+											缺点:
+													-->要求每个页面都是jsp等服务器页面
+					session何时销毁:
+							-->Tomcat设置session的默认失效时间为20分钟
+							-->调用session的validate方法
+
+					销毁三种设置方式:
+							第一种:
+									-->tomcat的web.xml中设置
+											<session-config>
+											<session-timeout>30</session-timeout>
+											</session-config>
+							第二种:
+									-->web工程中web.xml
+											<session-config>
+											<session-timeout>15</session-timeout>
+											</session-config>
+							第三种:
+									-->java代码中
+											session.setMaxInactiveInterval(30*60);//以秒为单位
+							第三种为推荐方法
+
+					session失效时的可以使用监听器类去实现销毁后的各种操作

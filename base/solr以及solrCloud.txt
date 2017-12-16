@@ -1,0 +1,59 @@
+solr
+	使用步骤?
+		-->创建索引:使用Http post方法发送一个描述field(字段)和内容的xml文件,去增删改索引
+		-->开始搜索:根据提前创建的索引,使用Http get
+		方法去搜索相关文档,根据返回的json/xml文件解析成java对象
+
+	什么是solr?
+		-->基于Lucene技术的全文搜索引擎服务
+
+	用户搜索和solr和关系型数据库之间的关系?
+		-->用户输入一段文字(搜索条件),交给solr,solr服务将这段文字解析成索引字段,去solr的索引库匹配找到相应的文档
+		-->和数据库没有关系
+
+	索引和文档存储位置?
+		-->索引和文档存储在solrhome/collection1/data文件中
+
+
+solr集群搭建
+	添加文档流程
+		-->一个整体的索引库(collection1)下面有两个shard1和shard2,zookeeper调度器会选择shard1或者shard2去存储
+		-->如果找到shard1,同时也找到shard1的slave节点,此时就转发找到slave节点同级的master节点,在master节点存储后,两个slave节点复制master的内容与其保持一致.
+	查询文档流程
+		-->
+
+	zookeeper(三个)+solrCloud(4个solr)
+		步骤一:zookeeper配置
+			-->复制三份一样的zookeeper-1,zookeeper-2,zookeeper-3
+
+			-->zookeeper-*中先创建一个data文件夹,并把data的绝对路径配置在/conf/
+			zoo.cfg中配置dataDir=data的绝对路径
+
+			-->data文件中创建一个名字为myid的文件
+
+			-->myid内容依次为1,2,3
+
+			-->修改/conf/zoo.cfg中clientport依次为2181,2182,2183
+
+		步骤二:solr配置
+			-->先copy四份Tomcat
+			-->将solr的war包放在各自的webapp下
+			-->复制4份solrhome在任意位置处
+			-->将solrhome的绝对路径配置在solr.war的工程的web.xml
+			-->修改solrhome中的solr.xml,修改ip和端口与各自的Tomcat的端口号一致.
+
+		步骤三:上传四份中的任意一份solrhome/collection1/conf到zookeeper中
+			-->./zkcli.sh -zkhost 192.168.25.128:2181,192.168.25.154:128,192.168.25.128:2183 -cmd upconfig -confdir /usr/local/solrhome-all/solrhome/collection1/conf -confname myconf
+			解释:
+				zkcli.sh是在文件夹下solr-4.10.3/example/scripts/cloud-scripts/zkcli.sh
+				
+				-zkhost:表示zookeeper的地址
+				192.168.25.128:2181,192.168.25.128:2182,192.168.25.128:2183:表示几个zookeeper的地址
+
+				upconfig -confdir:表示上传配置文件,后面表示被上传的配置文件地址
+
+		步骤四:关联solr集群和zookeeper集群
+			-->将JAVA_OPTS="-DzkHost=192.168.25.128:2181,192.168.25.128:2182,192.168.25.128:2183"配置在四个tomcat/bin/Catalina.sh中
+				先定位找到JAVA_OPTS这个
+
+		
