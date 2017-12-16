@@ -1,0 +1,16 @@
+❶安装gcc
+yum install -y gcc g++ gcc-c++ make
+
+❷ 解压 redis
+tar zxvf redis-3.0.0.tar.gz 
+cd redis-3.0.0
+
+❸ 执行 make 编译命令
+make MALLOC=libc  
+或者直接make ,然后在make install PREFIX=/usr/local/redis(安装到指定目录) 
+[]这种安装的就是将编译好的文件复制到指定目录。需要配置文件需要将redis.conf手动capy到redis/bin下
+
+❹ 启动关闭 reis
+启动 src/redis-server & （添加 &执行后台启动 ）
+后台启动也可以通过修改redis.conf文件，daemonize no 改为 daemonize yes
+关闭 src/redis-cli shutdown 
