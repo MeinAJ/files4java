@@ -1,2 +1,8 @@
 获取远程地址是多少?
 	git remote -v
+
+修改文件后
+	git add fullFileName:将修改了的文件add进git知道
+	git commit -m "修改了或者增加了"L:也是让git知道你修改了什么
+	git pull:push前最好都要先pull(将远程的代码拉下来)
+	git push:将commit的代码或者文件提交到远程
