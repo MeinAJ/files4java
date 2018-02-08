@@ -117,3 +117,193 @@ vim/vi
 执行批处理文件权限不足
 		chmod u+x filename.sh
 
+
+
+linux完全区分大小写
+linux的所有东西都是文件形式,包括硬件
+
+linux不靠扩展名区分文件类型
+
+windows下的程序不能直接在linux中安装和运行
+
+
+ls
+	-a 显示所有文件 --all
+	-l 显示详细信息 list
+	-d 查看目录属性 directory
+	-h 人性化显示文件大小 homan is able to understand
+	-i 显示这个文件的安装位置,每个安装位置都有唯一id,方便系统查找
+
+	
+cd
+	-p 递归创建目录  mkdir -p file01/file02
+	-  回到上一次的目录
+
+rm
+	-rf 强制删除文件
+	-r  删除目录
+	-f  force强制性
+
+cp
+	-r  复制目录
+	-p	连带文件属性复制
+	-d  若源文件是链接文件,则复制链接属性
+	-a  相当于 -pdr,如果想要源文件和拷贝的文件一模一样
+
+一级目录的作用
+	/bin	保存的是操作命令,普通用户都可访问执行
+	/sbin	保存的是操作命令,只有超级用户root才能执行
+
+硬链接
+	ln 
+		拥有相同的i节点和存储block块,可以看做是同一个文件
+		可通过i节点识别
+		不能跨分区
+		不能针对目录使用
+
+软链接和window的快捷方式类似
+	ln
+		-s  software表示软链接
+
+
+查找命令
+	locate
+		centos7.4默认是没有安装
+			1.先安装 yum install mlocate
+			2.updatedb	更新数据库
+			3.locate mlocate
+locate搜索时的规则与/etc/updatedb.conf配置文件有关
+	prune_bind_mounts = yes 表示开启搜索限制
+	prunefs = 搜索时,不搜索的文件系统
+	prunenames = 搜索时,不搜索的文件类型
+	prunepaths = 搜索时,不搜索的路径
+
+编辑vim时,不小心按了ctrl+s,类似死机
+	ctrl+q:退出假死状态
+
+whereis 命令名
+	搜索命令所在路径及帮助文档的位置
+	-b 	只查找可执行文件
+	-m  只查找帮助文件
+
+which	命令名
+	
+
+echo $PATH
+	搜索路径环境变量
+	当执行ls时,按道理是要路径名+命令名,但是这样不太方便,就有了path,设置path很多路径,当执行ls时,会去path设置的路径中找ls这个命令
+
+
+如何设置环境变量
+	/etc/profile文件中可以设置环境变量,jdk就是在这个文件中设置的环境变量
+	修改环境变量后,执行source /etc/profile才能生效
+
+find
+	精确查询:find 路径名 -name 文件名
+	模糊查询:find 路径名 -name
+		末尾加上*:匹配所有
+		末尾加上?:匹配任意一个
+
+find 路径名 -mtime +10
+	mtime:修改文件内容
+	ctime:改变文件属性
+	atime:文件访问时间
+	查找10天前修改的文件
+
+find 路径名 -size 25k
+	查找文件大小为25k的文件
+
+find 路径名 -inum 23232	
+	查找i节点为23232的文件
+
+find 路径名 -size -20k -a -size +50k
+	查找大于20k小于50k的文件
+
+find 路径名 -size -20k -a -size +50k -exec ls {} \;
+	查找大于20k小于50k的文件,并显示详情
+
+man
+	获取指定命令的帮助文档
+	man ls
+
+man -f ls
+	查找ls这个命令有几种不同的应用场景
+
+压缩:zip 压缩文件名.zip 源文件
+解压缩:unzip 压缩文件名.zip
+
+
+解决目录不能压缩的问题
+	压缩包:tar -zcvf 压缩文件 文件名 空格 文件名
+	解压包:tar -zxvf 压缩文件 被解压后的命名
+
+.tar.gz最常见的压缩格式
+
+
+shutdown -r now  能够正确关机和重启,比较安全的方式
+	马上重启
+
+还有其他几种命令
+	halt
+	init 0
+		0:表示关机
+		6:表示重启
+		1:单机用户,启动最少的程序
+		5:图形界面
+		3:完全多用户,就是一般的界面
+重启命令
+	init 6
+
+查看系统当前运行级别
+	runlevel
+
+退出登录命令--最好退出的时候,使用该命令
+	logout
+
+
+
+其他常用命令
+mount -O remount,exec /home
+	对/home目录结构下的文件重新挂载,使用exec权限
+	
+挂载光盘和usb硬盘相当于把光盘或者硬盘中的东西文件化,因为linux所有东西都要文件化
+
+
+last:
+	查询用户登录时间,退出时间
+
+创建shell脚本(打印一句话:天上掉下个林妹妹)
+	#!/bin/bash   这一句必须写
+	echo -e "天上掉下个林妹妹"
+
+
+查看已经生效的别名
+	alias
+
+修改别名
+	alias ls="ls --color=never"------这种修改方式是临时的
+
+
+永久修改别名
+	1.vim ~/.bashrc
+	2.修改成自己想要的别名
+
+命令生效的顺序
+	1.绝对路径和相对路径的命令
+	2.执行别名
+	3.执行bash的内部命令
+	4.按照$PATH环境变量定义的目录查找到对应的第一个命令
+
+快捷键
+	ctrl+l:清屏
+	ctrl+u:清空命令行
+	ctrl+a:移动到命令行的首部
+	ctrl+e:移动到命令行的尾部
+	ctrl+r:在历史命令中搜索
+
+历史命令记录
+	history:查看所有执行过的命令
+	history -c:清空历史命令记录
+	!n:执行历史命令记录中的第N条命令
+	!ser:执行命令记录中的以ser开头的命令的最后一条命令
+	
