@@ -20,8 +20,6 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.aj.service.news.dao", sqlSessionTemplateRef = "ajDbSqlSessionTemplate")
 public class AjDbDataSource {
 
-
-
     @Bean(name = "ajDbData")
     @ConfigurationProperties(prefix = "spring.datasource")
     @Primary
