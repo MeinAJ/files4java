@@ -12,6 +12,7 @@
     <modules>
         <module>service-client</module>
         <module>service-news</module>
+        <module>service-news-api</module>
     </modules>
 
 </project>
