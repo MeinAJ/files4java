@@ -13,4 +13,7 @@ import org.springframework.stereotype.Service;
 @Service(value = "newsService")
 public class NewsService {
 
+    public void addMNews() {
+
+    }
 }

@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.aj.servicenews.model", sqlSessionTemplateRef = "ajDbSqlSessionTemplate")
+@MapperScan(basePackages = "com.aj.service.model", sqlSessionTemplateRef = "ajDbSqlSessionTemplate")
 public class AjDbDataSource {
 
 	@Bean(name = "ajDbData")

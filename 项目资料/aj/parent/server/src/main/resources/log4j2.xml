@@ -16,13 +16,6 @@
 			</PatternLayout>
 		</Console>
 		
-		<!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定
-		<File name="File" fileName="${basePath}/log4j.log" append="false">
-			<PatternLayout>
-				<pattern>${logPattern}</pattern>
-			</PatternLayout>
-		</File>-->
-		
 		<!-- 输出error级别到指定路径 -->
 		<RollingFile name="rollingfile_error-msg" filename="${basePath}/log4j-error.log"
 			filePattern="${basePath}/log4j-error/log4j-error%d{yyyy-MM-dd}.log" append="true">
