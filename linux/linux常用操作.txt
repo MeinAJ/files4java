@@ -334,3 +334,12 @@ last:
 如何声明一个变量
 	a=234
 	echo "$a":结果为234
+
+
+防火墙
+	启动： 			systemctl start firewalld
+	查看状态： 		systemctl status firewalld 
+	停止： 			systemctl disable firewalld
+	禁用： 			systemctl stop firewalld
+	启用端口:		firewall-cmd --zone=public --add-port=9001/tcp --permanent
+	启用范围端口:	firewall-cmd --zone=public --add-port=8000-10000/tcp --permanent
