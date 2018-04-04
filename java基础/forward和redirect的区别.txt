@@ -1,0 +1,53 @@
+区别
+		forward和redirect区别?
+				
+				forward:
+						源码分析:
+							Forwards a request from a servlet to another resource (servlet, JSP file, or HTML file) on the server. This method allows one servlet to do preliminary processing of a request and another resource to generate the response.The request and response parameters must be either the same objects as were passed to the calling servlet's service method .
+						意思:
+							处理完第一个request请求后,暂时不返回请求,而是response.getRequestDispatcher.forward(HttpServletRequest req,HttpServletResponse resp);
+							把request和response对象传入下一个服务器处理模块,执行完这个转发请求后,就返回处理结果
+						结论:
+							转发后,以前的request对象中数据就会继续保留
+
+						底层代码忘记了:
+							大致是forward方法中有一个方法叫doDispatcher(),底层是并没有将结果返回给浏览器,而是将结果保存起,直到将下一个request服务器请求完成后,在将结果返回给浏览器
+
+
+				redirect:
+						源码分析:
+							Sends a temporary redirect response to the client using the 
+							specified redirect location URL. This method can accept relative URLs; the servlet container must convert the relative URL to an absolute URL before sending the response to the client. If the location is relative without a leading '/' the container interprets it as relative to the current request URI.If the location is relative with a leading '/' the container interprets it as relative to the servlet container root.
+						意思:
+							发送一个指定URL临时重定向(暂且叫转发)到客户端,这一步经过了客户端,相当于发送了另一次请求,在浏览器地址中就可以看出,是发送了另一个请求
+
+						再看源码:
+						response.sendRedisrect("/hello.jsp");
+							public void sendRedirect{
+								String absolute = toAbsolute(location);
+	      						setStatus(status); //这里，重定向是返回302状态码以及Location和对应的url
+								setHeader("Location", absolute);
+							}
+    					意思:
+    						也可以验证返回给浏览器的Status Code:302 Found,Location:http://localhost:8080/test/hello.jsp
+    						Location:根据这个,浏览器就向服务器发送一个新的请求
+    						但是这一个动作并不会将request中数据清除掉
+
+    					最根本原因-继续源码:
+    						service的方法执行案完的finally块中,有一段代码
+    							if (!comet && !async || error.get()) {
+									request.recycle();  //注意这两行代码
+									response.recycle();
+   								} 
+   								public void recycle() {
+									attributes.clear();
+									...
+									...
+									...
+								}
+   						这一步就是将request中的信息抹掉
+
+						结论:重定向后,request数据就会接受不到,因为被清空了
+
+
+

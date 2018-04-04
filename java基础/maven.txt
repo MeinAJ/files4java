@@ -1,0 +1,72 @@
+maven原理
+		两个核心点?
+			-->POM:project object model
+					-->看成一个Java对象,都有父类
+					-->一个Java对象内部属性决定了一个对象的唯一性(ID)分别是groupID\artifactId\version\classifiler\type
+					-->同时项目会依赖(dependency)和多个模块(module)或者插件(plugins)
+					-->pom.xml文件来描述一个对象需要哪些依赖(dependency)和插件(plugins),还描述了父类(parent),也就继承了父类的所有东西
+			-->LifeCycle
+					几个构建项目重要过程
+					-->validate:
+							验证项目有效性及项目需要的内容是否具备
+					-->initialize:
+							创建构建需要的目录等
+					-->compile前
+							对资源文件进行过滤等操作
+					-->compile
+							编译源代码
+					-->compile后
+							编译生成的文件进行处理
+						.
+					test进行同样的过程	
+						.
+					-->package
+							打包成jar.war等
+					-->集成测试等操作(generate)
+
+					-->install
+							打包产物到本地maven仓库
+					-->deploy
+							打包产物到远程仓库
+
+			-->parse(过程)与goal(实现动作)
+					-->parse是maven规范流程内容(类似于接口)
+					-->goal类似于接口的实现,具体怎么编译,编译在什么地方,对应于什么插件(plugins标签)
+
+			-->为什么pom文件中没有配置编译后的文件位置,但是依然可以?
+					-->因为所有的项目(pom)都继承了超父类(super pom),超父类定义了编译后生成文件的位置
+
+
+
+			几个过程之间的关系
+					-->后面的操作,都会执行前面的命令
+
+		是什么?
+			-->项目工程对象化 project object model(make project be object model)
+			-->对工程建模,建成一个对象类似于Java对象的思想
+
+		作用?
+			-->项目构建管理(功能模块独立开发)
+					-->maven本地仓库安装在linux或者windows环境下,有本地仓库,一群开发人员在仓库中寻找自己的需要的jar,每个人开发一个模块,并最终deploy到仓库中,每个人就可以共享了.
+			-->	版本控制依赖下载
+					-->groupID+
+					-->artifactId+v
+					-->version+
+					-->classiFiler(根据不同jdk的jar选择,比如版本号后面还跟着json-lib:2.2.2.jdk15)(下载源码包)+
+					-->type(默认该项目为jar类型,还可以为ejb)
+
+		为什么有target目录?
+			-->lib/maven-model-builder-3.0.3.jar:org/apache/maven/model/pom-4.0.0.xml目录中配置了产生文件的位置
+
+		创建方式?
+			两种方式
+				-->archetype插件(骨架)
+				-->无骨架
+
+		maven项目中四个域范围?
+			-->provided		编译,测试,运行(大部分)
+			-->runtime		测试,运行(jdbc)
+			-->test 		测试(junit,测试才使用)
+			-->compile 		编译,测试(Servlet-api,工程会部署在tomcat容器中)
+
+			只有运行期间有效的,打包时才复制进包中

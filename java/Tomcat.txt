@@ -1,7 +1,0 @@
-Tomcat
-		1.Tomcat启动就去解压war?
-				-->Tomcat 配置的server 文件里的host节点下有unpackWARs="true"
-				-->如果没有配置就不能自动解压
-
-		2.并发量多少
-				一般400人还可以提供服务,500人就较为慢
