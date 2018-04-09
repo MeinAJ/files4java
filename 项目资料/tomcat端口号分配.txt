@@ -1,0 +1,14 @@
+tomcat4Server
+	server 					8005
+	connector/http/1.1		8089
+	connector/AJP/1.3		8009
+
+tomcat4User
+	server 					8015
+	connector/http/1.1		8088
+	connector/AJP/1.3		8019
+
+tomcat4User
+	server 					8025
+	connector/http/1.1		8090
+	connector/AJP/1.3		8029
