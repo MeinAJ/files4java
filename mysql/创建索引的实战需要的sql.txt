@@ -1,0 +1,22 @@
+创建索引:
+	alter table student add index s_name(s_name);
+
+查看表所创建的索引:
+	show index from tablename
+
+删除索引
+	drop index index_name on table_name;
+
+循环插入数据:
+	CREATE PROCEDURE test_insert() 
+	BEGIN 
+	DECLARE y TINYINT DEFAULT 1;
+	WHILE y<20
+	DO
+	insert into school_sp_mj(school_id,mojor_id,status) values(1,y,1); 
+	SET y=y+1; 
+	END WHILE ; 
+	commit; 
+	END;; 
+	CALL test_insert();
+
