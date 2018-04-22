@@ -20,3 +20,7 @@
 	END;; 
 	CALL test_insert();
 
+explain的字段意思:
+	select_type:
+		simple:		没有union和子查询,都是简单的查询
+		
