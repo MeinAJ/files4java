@@ -20,11 +20,11 @@
 
 安装solr
 
-	1、解压solr ，把 solr\solr-7.1.0\server\solr-webapp下的 webapp 文件夹拷贝到tomcat 的webapps下，重命名为solr7，也可以是其他名字
+	1、解压solr ，把 solr\solr-7.1.0\server\solr-webapp下的 webapp 文件夹拷贝到tomcat 的webapps下，重命名为solr，也可以是其他名字
 	2、拷贝solr-7.1.0\server\lib\ext 下的jar包以及lib目录下gmetric4j-1.0.7.jar,以metrics开头的jar包拷贝到 tomcat\webapps\solr 	   项目的WEB-INF\lib下
-	3. 拷贝solr-7.1.0\server\solr，重命名为solrhome,拷贝到tomcat的webapps下
+	3. 拷贝solr-7.1.0\server\solr，重命名为solrhome
 	4. 修改tomcat\webapps\ solr(solr的项目名)\WEB-INF\web.xml, 找到如下代码，去掉注释，/put/your/solr/home/here改为你自己的solrhome的路径
-		<env-entry>  
+		<env-entry>
 		    <env-entry-name>solr/home</env-entry-name>  
 		    <env-entry-value>/usr/local/solr-7.1.0/solrhome</env-entry-value>  
 		    <env-entry-type>java.lang.String</env-entry-type>  
