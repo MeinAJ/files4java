@@ -6,3 +6,12 @@
 	git commit -m "修改了或者增加了"L:也是让git知道你修改了什么
 	git pull:push前最好都要先pull(将远程的代码拉下来)
 	git push:将commit的代码或者文件提交到远程
+	
+	
+本地创建远程分支
+
+	git branch branch01								 (在本地创建一个分支,基于你上一次提交的,也就是说这个分支也有之前的东西)
+	git push --set-upstream origin branch01			 (将本地的分支关联到远程的分支,相当于在远程创建了一个同名的分支)
+														直接pull是不行的,因为远程并没有这个分支
+	
+	
