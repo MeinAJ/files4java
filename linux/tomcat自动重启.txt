@@ -15,7 +15,7 @@ restartTomcat()
 {
 
 	echo "start---$(date +'%F %H:%M:%S')"
-	if [[ shj_service_user_tomcat_pid ]];then
+	if [[ $shj_service_user_tomcat_pid ]];then
 		kill -9 $shj_service_user_tomcat_pid	#干掉进程
 		sleep 2									#睡2s
 		$shj_service_user_tomcat_startup		#重启tomcat
