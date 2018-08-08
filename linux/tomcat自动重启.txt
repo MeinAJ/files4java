@@ -24,6 +24,7 @@ restartTomcat()
 		$shj_service_user_tomcat_startup		#进程已关闭,直接重启tomcat
 		echo "end---else---$(date +'%F %H:%M:%S')"
 	fi
+	echo -e '\n\n'
 }
 
 restartTomcat >> $TomcatRestartLog
