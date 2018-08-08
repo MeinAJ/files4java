@@ -343,3 +343,14 @@ last:
 	禁用： 			systemctl stop firewalld
 	启用端口:		firewall-cmd --zone=public --add-port=9001/tcp --permanent
 	启用范围端口:	firewall-cmd --zone=public --add-port=8000-10000/tcp --permanent
+	
+	
+	
+	
+	
+grep的使用
+	grep -w 'tomcat'	表示包含tomcat字符串的行
+	grep -v 'grep'		表示不包含字符串为grep的行
+	awk '{print $2}'	表示以空格切断,打印第二个数据
+	
+	
