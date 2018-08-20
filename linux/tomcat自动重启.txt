@@ -1,0 +1,31 @@
+#!/bin/bash
+#tomcat自动重启
+
+#user启动位置
+shj_service_user_tomcat_startup=/mnt/java/tomcat/apache-tomcat-7.0.79-shj-service-user/bin/startup.sh
+#手动重启日志位置
+TomcatRestartLog=/mnt/java/tomcat/tomcatRestart.log
+
+#先获取tomat进程的pid
+
+shj_service_user_tomcat_pid=$(ps -ef|grep shj-service-user | grep -w 'shj-service-user' | grep -v 'grep' | awk '{print $2}')
+
+
+restartTomcat()
+{
+
+	echo "start---$(date +'%F %H:%M:%S')"
+	if [[ $shj_service_user_tomcat_pid ]];then
+		kill -9 $shj_service_user_tomcat_pid	#干掉进程
+		sleep 2									#睡2s
+		$shj_service_user_tomcat_startup		#重启tomcat
+		echo "end---if---$(date +'%F %H:%M:%S')"
+	else
+		$shj_service_user_tomcat_startup		#进程已关闭,直接重启tomcat
+		echo "end---else---$(date +'%F %H:%M:%S')"
+	fi
+	echo -e '\n\n'
+}
+
+restartTomcat >> $TomcatRestartLog
+
