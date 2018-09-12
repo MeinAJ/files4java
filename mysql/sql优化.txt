@@ -1,0 +1,10 @@
+使用max()时:
+	select max(paydate) from payment;
+	这样是全表扫描
+	可以使用创建索引
+		create index idx_paydate on payment(paydate);
+
+	创建索引后,如果计算max(paydate)就非常快了,直接取最后一个数据
+
+
+当使用explain后,出现using temporary table和using filesort后,就要去优化了,因为这样io操作非常耗时
