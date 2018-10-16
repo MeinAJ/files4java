@@ -1,0 +1,50 @@
+非常用:
+	标准参数
+		-help
+		-server -client
+		-version
+
+	X参数(非标准化参数)
+		-Xint:解释执行
+		-Xcomp:第一次使用就编译成本地代码
+
+常用:
+	XX参数
+		boolean类型
+			-XX:[+-]<name>表示启用或者禁用name属性
+			-XX:UseConcMarkSweepGC
+			-XX:+UseG1GC
+		非boolean类型:
+			-XX:[+-]<name>=<value>
+			比如:
+				-XX:MaxGCPauseMillis=500
+				XX:GCTimeRatio=19
+		-Xms等价于-XX:InitialHeapSize
+		-Xms等价于-XX:MaxHeapSize
+
+		最大堆的内存:jinfo -flag MaxHeapSize 19314
+		
+		线程栈的内存:jinfo -flag ThreadStackSize 19314
+
+		某个初始值:-XX:+PrintFlagsInitial
+		某个最终值:-XX:+PrintFlagsFinal
+
+
+		jps
+
+		jinfo:正在运行的jvm的参数(多半是静态的)
+
+			jinfo -flags pid
+			jinfo -flag MaxHeapSize pid
+
+		查看垃圾回收机制
+			是否使用并行标记清除算法:jinfo -flag UseConcMarkSweepGC pid
+			是否使用G1GC算法:jinfo -flag UseG1GC pid
+			是否使用并行算法:jinfo -flag UseParallelGC pid
+
+		jstat:查看jvm的统计信息(类加载,垃圾收集,jit收集)(多半是动态的)
+			jstat -class/-compiler/-gc/-printcompilation
+			jstat -class pid 1000 10
+				表示1000ms查询一次  查询10次
+			jstat -gc pid
+				查看jvm的空间使用情况
