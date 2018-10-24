@@ -47,4 +47,21 @@
 			jstat -class pid 1000 10
 				表示1000ms查询一次  查询10次
 			jstat -gc pid
-				查看jvm的空间使用情况
+				查看jvm的空间使用情况			
+
+
+-XX:CICompilerCount=3 
+-XX:InitialHeapSize=257949696 
+-XX:MaxHeapSize=4120903680 
+-XX:MaxNewSize=1373634560 
+-XX:MinHeapDeltaBytes=524288 
+-XX:NewSize=85983232 
+-XX:OldSize=171966464 					
+-XX:+UseCompressedClassPointers 		使用压缩类指针  和UseCompressedOops配套使用
+-XX:+UseCompressedOops 					压缩普通对象指针  64位的对象指针会比32位时长1.5倍,使用该压缩技术可以减少内存消耗
+-XX:+UseFastUnorderedTimeStamps 		
+-XX:+UseParallelGC						使用并行回收机制
+
+
+S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT   
+186880.0 1536.0  0.0   1468.0 455168.0 241009.9 2682880.0  2195091.4  82432.0 77177.7 8704.0 7736.7  11502  442.327 1171   291.140  733.467
