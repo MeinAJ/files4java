@@ -21,6 +21,7 @@ cpu核心数:线程数= 1:2(超线程)
 	实现Runnable
 		new Thread(Thread继承类).start()
 	实现Callable
-		有返回值,但是启动方式不是直接用 new Thread(Thread类),而是用new FutureTask(Thread类).start()
+		有返回值,但是启动方式不是直接用 new Thread(Thread类),而是用new Thread(new FutureTask(Thread类)).start()
+
 
 
