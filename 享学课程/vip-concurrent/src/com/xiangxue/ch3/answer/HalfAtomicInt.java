@@ -20,8 +20,8 @@ public class HalfAtomicInt {
                 break;
             }
         }
-        atomicI.incrementAndGet()
     }
+
 
     public int getCount() {
     	return atomicI.get();
