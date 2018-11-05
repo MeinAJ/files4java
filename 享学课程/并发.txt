@@ -25,3 +25,110 @@ cpu核心数:线程数= 1:2(超线程)
 
 
 
+AQS:
+	AbstractQueuedSynchronizer
+
+
+并发包中继承了该类的类
+	ReentrantLock:
+		Sync
+		NonfairSync
+		FairSync
+
+	ReentrantReadWriteLock
+		Sync
+		NonfairSync
+		FairSync
+		ReadLock
+		WriteLock
+
+	Semaphore
+		Sync
+		NonfairSync
+		FairSync
+
+	CountDownLatch
+		Sync
+
+	ThreadPoolExcuteExecutor
+
+
+
+这些都是继承了AQS抽象类
+	
+
+
+在Java中可以概括的锁分类以下几类
+	共享锁和排它锁
+	公平锁和非公平锁
+	可重入锁和非重入锁
+	乐观锁和悲观锁
+
+Java的内置的锁:
+	synchronized
+		排它锁,可重入锁
+			优点:使用简单
+			缺点:暂用资源非常多,如果一个线程锁的不释放,那么其他锁永远也得不到锁,非常浪费资源,用户交互上,不能够及时响应
+
+并发包提供的锁:
+	
+	Lock锁:
+		共享锁和排他锁都有实现,也可重入
+			底层原理:
+				cas
+				队列(双向链表)
+				LockSupport的支持
+
+			优点:可重入,获取锁可被中断,超时获取锁,可以尝试获取锁,可以读写分离锁
+
+
+与并发相关的类
+	CyclicBarrier
+	CountDownLatch
+	Semaphore
+	LockSupport
+	Exchange
+	Callable/Future/FutrueTask
+
+	ReentrantLock
+	ReentrantReadWriteLock
+
+与并发相关的概念
+	Fork/Join:分而治之,分成几份,但是每一份都和原来具有同样的意义,然后将结果结合,用到了多线程技术,多线程同时运算
+
+Thread类方法
+	join()
+	yield()
+	sleep()
+	setDamon()
+	isDamon()
+	start()
+	run()
+	interrupt()
+	isInterrupted()
+
+
+Object类方法
+	wait()
+	notify()
+	notifyAll()
+
+
+这是都是单体应用中可以使用的,但是如果在分布式中,对于数据库的某张表有多个入口操作(集群的方式),此时这一类锁就没有作用
+
+
+分布式锁:
+	1.redis的setNX()
+	2.基于zookeeper的实现*-------
+
+
+取模:
+	345%16 == 345&(n^4-1)
+
+位运算会用来做
+	1.某种属性的是否存在
+	2.方便存储,位运算更加快
+
+volatile的作用:
+	就是任何线程改了值之后,会立即通知线程去内存拿到最新被修改的值 如果不是的话 从cpu的缓存或者线程自己的copy的一份里面拿就会出现数据不一致
+
