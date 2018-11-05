@@ -15,7 +15,6 @@ public class LockDemo {
 	
 	public void increament() {
 		lock.lock();
-		lock.lockInterruptibly();
 		try {
 			count++;
 		}finally {

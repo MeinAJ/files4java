@@ -132,3 +132,111 @@ Object类方法
 volatile的作用:
 	就是任何线程改了值之后,会立即通知线程去内存拿到最新被修改的值 如果不是的话 从cpu的缓存或者线程自己的copy的一份里面拿就会出现数据不一致
 
+
+
+
+    /**
+     * Thread方法
+     *
+     * Object方法
+     *
+     * Fork/Join
+     *
+     * cas
+     *
+     * CountDownLatch
+     * CyclicBarrier
+     * Exchange
+     * Semaphore
+     *
+     * LockSupport
+     *
+     * ReentrantLock
+     * ReentrantReadWriteLock
+     *
+     * 继承至AbstractQueuedSynchronizer
+     *      ReentrantLock
+     *          根据AQS父类的state状态(由cas保证对state的操作是原子性,可重入进入就加1,释放就减一)来判断是否可以获取锁
+     *          排它锁
+     *              当一个线程占用了,其它线程不可能能够占用
+     *          默认非公平锁
+     *              就是直接先获取锁,如果获取到锁就直接返回,如果没有获取到锁就调用acquire(1)去获取,进去后判断当前锁是否空闲,空闲情况下compareAndSetState(0,1),如果成功就返回
+     *              如果失败还要判断是否是重入类型的(也就是是否还是同一个线程),如果是state本来=1,然后在加1或者加acquires.如果在tryAcquire(1)中无法获取到锁,就会直接进入队列中阻塞等待了
+     *                  总结就是:
+     *                      直接获取锁(compareAndSwapInt)不行,再尝试tryAcquire(里面包含再次去获取锁,验证是否是重入锁,放入队列中等待自旋,一直等待到获取到锁为止.
+     *          公平锁
+     *              会直接判断目前这个线程是否就是线程的头和是否是重入锁类型,如果是获取到锁(我们说的获取到锁就是将state=0置为1,或者state=1置为2,就看到底是否是可重入锁)
+     *              如果不是,就会直接进入队列中阻塞等待了(最后一步是与非公平锁的最后一步是一致的)
+     *          compareAndSwapInt
+     *          compareAndSetInt
+     *              这些底层方法是jvm底层c或者c++实现的cas原子操作
+     *
+     *      ReentrantReadWriteLock
+     *          读锁
+     *              先尝试去直接去获取锁(tryAcquireShared中的compareAndSetState),然后实在不行就调用doAcquireShared的addWaiter(先加入共享类型的Node队列链表中),再次等待获取锁(阻塞)直到获取到锁为止
+     *          写锁
+     *
+     *
+     *      CountDownLatch
+     *          记录多个或者一个线程到达countDown()方式为止时,new CountDownLatch(count)中的count-1,减为0时,就可以在await()的地方继续执行下去
+     *          也是使用了共享锁,放入队列链表中.
+     *
+     *      CyclicBarrier
+     *          当所有的线程到达await时,才能够继续await后面的代码段
+     *
+     *      Semaphore
+     *           默认使用的是非公平锁
+     *           用途:
+     *              用于限制访问某个资源的线程数量,只能同时最多有10个人(如果你设置成10的话)获取到线程,其它人在等待队列中等待,当其中有人释放了,等待队列中的就会去抢,默认是非公平的锁,就是有新的线程直接去获取锁
+     *              这里用到了等待通知范式,当有其它线程执行完后,唤醒其它所有线程去抢锁
+     *
+     *      ThreadLocalExecutor
+     *
+     * AQS的原理
+     *      队列(双向链表)
+     *          等待队列是双向链表,如果存在Condition对象,会在Condition类中也建立一个双向链表,每个Condition拥有自己的一个锁
+     *      最底层是cas
+     *          V A  B
+     *          V地址的值与A值相同时,就把B值赋值给V地址
+     *          ABA问题:
+     *              A->B->A时,cas是无法判定错误的,为了解决这个ABA问题,AtomicStampedReference来解决ABA问题
+     *      LockSupport
+     *
+     *
+     * ConcurrentHashMap
+     *      1.7:segment加锁
+     *          table数组,放单项链表的表头
+     *          get方式是弱一致性,在获取的过程中是没有加锁的,很有可能
+     *          size方法也是弱一致性(获取前两次不加锁,不一致才要加锁获取)
+     *          自动扩容:0.75的扩容因子,扩容2倍
+     *          内部的Segment对象就是一个锁,继承至ReentrantLock
+     *
+     *      1.8:还未看源码
+     *
+     * 锁类型
+     *      公平锁
+     *          公平锁用的很少,因为效率更低,自旋让其他线程一直等待,可能某个线程很快及执行完 但是必须要一直等待
+     *      非公平锁
+     *          在新线程进来时都会去尝试去获取锁,获取不到再被放入队列中等待
+     *      可重入锁
+     *          当某一个线程多次进入加锁的位置,可重入就叫可重入锁,实现的原理就是state值一直递增,释放的时候递减,减为0就表示出来,
+     *          都是cas保证state的数据安全,也会被volatile修饰来保证某个线程修改了后,其它线程能够马上看到最新的值,从而忽略缓存带来的延迟,保证安全就必须牺牲时间
+     *      非重入锁
+     *
+     *      乐观锁
+     *      悲观锁
+     *      共享锁
+     *          也就是ReentrantReadWriteLock的读锁,如果是加了读锁的,进入一次就递增,出去了就减一次,如果现在有写线程进来,这时读写都会被堵塞,这种非常适合读多写少的情况下
+     *      独占锁
+     *          也就是ReentrantReadWriteLock的写锁,写锁被占用其他线程是能获取到的,其他线程就进入队列中
+     *
+     * 分布式锁
+     *      redis的setNX,能解决并发不高情况,很有可能在某个线程执行长时间时都还没有执行完就释放锁了 导致线程安全问题
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
