@@ -240,3 +240,27 @@ volatile的作用:
      *
      *
      */
+
+     单体应用的锁
+     	synchronized
+     	Lock
+     	分布式锁:也为了以后做集群的扩展性
+
+    分布式应用的锁:
+    	如果共享资源在单体服务器上,不需要分布式锁:
+    		synchronized
+    		Lock
+    		分布式锁那种情况都可以用扩展性最好
+
+   	分布式锁的实现
+   		redis:
+   			1.setNX get getset
+   			2.setNX setExpire
+   			3.数据库的乐观锁实现
+   				加version字段表示版本:修改一次就版本+1,每次修改数据就会比较版本
+   				分为两步:
+   					1.select * from t_user where state = 0
+   					2.update where version = 1 and 条件
+   		分布式锁的逻辑:
+   			获取3次,睡2s都还是不能获取锁直接返回400  可以根据业务定义睡几秒  强一直性的情况下  要么失败要么一直等待
+   			
