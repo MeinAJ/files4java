@@ -1,0 +1,28 @@
+Jedis jedis = RedisPool.getJedis();
+		try {
+			while(true){
+				Long lockkey = jedis.setnx("lockkey", String.valueOf(SHJDate.getCurrentTimestemp() + 10));
+				if (lockkey == 1D){
+					//获取锁成功
+					//todo
+					return 1;
+				} else {
+					//获取锁失败,再判断是否锁已经过期
+					String oldTimeStamp = jedis.get("lockkey");
+					if (SHJDate.getCurrentTimestemp() < Long.parseLong(oldTimeStamp)){
+						//锁已经过期了
+						String currentExpireTime = jedis.getSet("lockkey", String.valueOf(SHJDate.getCurrentTimestemp() + 10));
+						if (oldTimeStamp.equals(currentExpireTime)){
+							return 1;
+						}
+						//没有获取到锁,一直自旋
+					}
+					//没有过期就不做任何处理,一直自旋
+				}
+			}
+		} catch (Exception e){
+			if (jedis != null){
+				jedis.close();
+			}
+		}
+		return 0;
