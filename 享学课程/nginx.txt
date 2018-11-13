@@ -1,0 +1,8 @@
+重启
+	nginx -s reload
+停止
+	nginx -s stop
+检查文件格式
+	nginx -t
+以配置文件启动
+	nginx -c /etc/nginx/nginx.conf)(默认也是这个)
