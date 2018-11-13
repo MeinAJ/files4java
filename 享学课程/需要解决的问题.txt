@@ -20,3 +20,4 @@ location配置规则看一下
 linux中安装两种方式看一下
 linux中软件的卸载
 nginx.conf文件参数看一下
+日志切割
