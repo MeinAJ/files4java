@@ -19,6 +19,9 @@ public class RedisUtil {
                  * 获取锁,看是否已经过期
                  */
                 String oldTimeStamp = jedis.get(key);
+                if (oldTimeStamp == null){
+                    return 0;
+                }
                 if (Long.parseLong(oldTimeStamp) < System.currentTimeMillis()){
                     //已经过期,如果可以获取
                     String currentExpireTime = jedis.getSet(key, String.valueOf(System.currentTimeMillis() + expire * 1000));
