@@ -357,5 +357,23 @@ echo -e "\n"
 	-e是为了解析\的,不加-e就不能换行
 	
 	
-	
-	
+ps -aux
+	详细的进程信息
+
+cat
+	显示全部文本内容
+
+more
+	滚动显示文本内容,enter键滚动
+
+netstat -nlpt
+	查看占用的端口
+
+scp
+	使用shh协议的文件复制(传输)
+	scp root@47.107.170.207:/mnt/web/study ./
+	47.107.170.207服务器的/mnt/web/study,复制到当前服务器的当前文件夹下
+
+	scp /mnt/java/test root@47.107.170.207:/mnt/web
+	当前服务器复制/mnt/java/test到47.107.170.207服务器的/mnt/web文件夹下
+
