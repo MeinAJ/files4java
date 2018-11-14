@@ -16,5 +16,8 @@ Lock的几个实现接口,CountDownLatch,Semaphore源码实现再看一遍
         }
         表示什么意思
 
-
-使用nginx做一个集群,使用两份相同的代码
+location配置规则看一下
+linux中安装两种方式看一下
+linux中软件的卸载
+nginx.conf文件参数看一下
+日志切割
