@@ -377,3 +377,11 @@ scp
 	scp /mnt/java/test root@47.107.170.207:/mnt/web
 	当前服务器复制/mnt/java/test到47.107.170.207服务器的/mnt/web文件夹下
 
+linux中安装软件几种方式
+	1.源码安装
+		./configure --prefix=/mnt/web(指定一个安装目录,编译后的安装目录)
+		make && make install
+
+	2.yum install nginx(这种方式往往不行)
+		yum -y install epel-release(yum扩展包)运行这一段后就可以了
+		yum -y install nginx就ok了
