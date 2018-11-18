@@ -21,3 +21,4 @@ linux中安装两种方式看一下
 linux中软件的卸载
 nginx.conf文件参数看一下
 日志切割
+nginx中的redirect和permanent待定对浏览器的区别是什么

@@ -17,3 +17,8 @@ nginx总结性的东东
 		 alias
 		 index
 		 rewrite
+		 	空				会往下继续rewrite,如果没有了,会引发location重新匹配
+		 	last			不会继续往下执行,而是会引发location重新匹配,很有可能引发循环,少用
+		 	break			不会继续往下执行,也不会引发重定向,到这里就结束了
+		 	redirect		页面重定向,浏览器网址会变化
+		 	permanent
