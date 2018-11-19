@@ -88,3 +88,22 @@ show VARIABLES like 'innodb_log_buffer_size';
 
 -- innodb的日志文件有多少个
 show VARIABLES like 'innodb_log_files_in_group'
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 数据库锁
+	-- myisam和innodb锁
+	-- myisam是表级锁,innodb支持表级锁,也支持行级锁,默认采用行级锁
+
+
+-- 查看事务级别是什么,innodb默认的是REPEATABLE-READ(可重复读),会出现幻读,幻读会在插入或者删除出现,如果
+show variables like '%tx_isolation%';
+
+-- 事务隔离级别
+	-- READ UNCOMMITTED  未提交读
+	-- READ COMMITTED		 已提交读
+	-- REPEATABLE-READ	 可重复读
+	-- SERIALIZABLE			 序列化
+
+	-- set session transaction isolation level read uncommitted
+	-- 自动提交事务是开启的
+show variables like '%autocommit%';
