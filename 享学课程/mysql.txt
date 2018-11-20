@@ -1,0 +1,109 @@
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- tps  transaction per second
+
+use information_schema;
+
+select VARIABLE_VALUE into @num_com from GLOBAL_STATUS where
+VARIABLE_NAME ='COM_COMMIT';
+
+select VARIABLE_VALUE into @num_roll from GLOBAL_STATUS where
+VARIABLE_NAME ='COM_ROLLBACK';
+
+select VARIABLE_VALUE into @uptime from GLOBAL_STATUS where
+VARIABLE_NAME ='UPTIME';
+
+select (@num_com+@num_roll)/@uptime;
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- qps  query per second
+
+select VARIABLE_VALUE into @num_queries from GLOBAL_STATUS where
+VARIABLE_NAME ='QUESTIONS';
+
+select VARIABLE_VALUE into @uptime from GLOBAL_STATUS where
+VARIABLE_NAME ='UPTIME';
+
+select @num_queries/@uptime;
+
+
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 缓存
+
+show VARIABLES like '%max_connections%';
+
+-- CACHE
+-- 查询缓存是否开启
+show VARIABLES like '%query_cache_type%';
+
+-- 是否支持缓存查询
+show VARIABLES like '%have_query_cache%';
+
+-- 单个查询的结果最大缓存大小(字节b)
+show VARIABLES like '%query_cache_limit%';
+
+-- 每个查询的结果最小占用大小是多少(字节b)
+show VARIABLES like '%query_cache_min_res_unit%';
+
+-- 缓存的内存大小(有点不明白)
+show VARIABLES like '%query_cache_size%';
+
+show VARIABLES like '%cache_free_memory%';
+
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 解析查询
+-- 暂时保留这一段,好像网友说的和资料有点出入.from -> where -> group by(having) -> order by -> select(distinct) -> limit
+
+-- having是group by的条件
+-- where是表或者视图的条件
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 存储引擎
+
+-- 支持的引擎类型
+show ENGINES;
+
+-- 使用的引擎
+show VARIABLES LIKE "%storage_engine%"
+
+-- myisam引擎
+-- 由MYD和MYI构成
+	-- 表级锁
+	-- 支持全文索引
+	-- 支持数据压缩(myisampack -b -f testmysam.MYI)
+	-- 不支持事务,即没有rollback这么一说
+	-- 适合读操作
+
+
+-- innodb,5.5之后默认的引擎
+-- 如果开启,每个表都会有独立的frm和idb文件
+show VARIABLES like 'innodb_file_per_table'
+-- 建议:innodb使用独立表空间,可以同时刷新多张表数据
+	-- 支持事务OLPT
+	-- 支持行级锁,并发程度更高
+
+-- innodb的日志缓存大小(b,字节)
+show VARIABLES like 'innodb_log_buffer_size';
+
+-- innodb的日志文件有多少个
+show VARIABLES like 'innodb_log_files_in_group'
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 数据库锁
+	-- myisam和innodb锁
+	-- myisam是表级锁,innodb支持表级锁,也支持行级锁,默认采用行级锁
+
+
+-- 查看事务级别是什么,innodb默认的是REPEATABLE-READ(可重复读),会出现幻读,幻读会在插入或者删除出现,如果
+show variables like '%tx_isolation%';
+
+-- 事务隔离级别
+	-- READ UNCOMMITTED  未提交读
+	-- READ COMMITTED		 已提交读
+	-- REPEATABLE-READ	 可重复读
+	-- SERIALIZABLE			 序列化
+
+	-- set session transaction isolation level read uncommitted
+	-- 自动提交事务是开启的
+show variables like '%autocommit%'; 

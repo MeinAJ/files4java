@@ -47,4 +47,20 @@ nginx中的正则符号的作用
 		前端header携带origin:static.enjoy.com
 		nginx获取header中的origin信息,判断只要是enjoy.com的一级域名,就在返回header中添加字段access-control-allow-origin static.enjoy.com
 
-	
+		upstream						负载均衡配置的分发ip
+		server							虚拟地址							
+	  		location   						uri映射,分发
+	  			proxy_pass						如果proxy_pass后面的ip+port带了/,location上的映射到的path就不带上,如果没有/,就带上location上的映射到的path,带向分发
+				root							声明静态文件目录,不是命令,location匹配的path,会被带到内容生成端
+				alias							别名,location匹配的path,不会被带到内容生成端,别名只是加上匹配的path的后面部分
+				index							
+					1.只看uri的结尾是否是/结尾,如果是就表示目录,index才会起作用,如果不是/结尾,就表示是文件,index就不起作用
+					2.(uri=匹配到的path1+为匹配到的path2,会将配置的  /目录地址/ + path1 + path2,如果找不到文件,就直接找index配置的默认文件)
+				rewrite							uri替换,格式: rewrite regex replacement [flag]    flag = {什么都没有,last,break,redirect,permanent}
+					什么都没有						不会去匹配location,只是匹配下一个rewrite
+					last							会去匹配其它location下的rewrite,是因为location和rewrite的last作用,导致需要去重新匹配其它location的rewrite
+					break							会打断后续匹配
+					redirect						重定向
+					permanent						永久重定向
+
+				^/:表示总是匹配
