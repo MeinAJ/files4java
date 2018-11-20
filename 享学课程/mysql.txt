@@ -106,4 +106,4 @@ show variables like '%tx_isolation%';
 
 	-- set session transaction isolation level read uncommitted
 	-- 自动提交事务是开启的
-show variables like '%autocommit%';
+show variables like '%autocommit%'; 
