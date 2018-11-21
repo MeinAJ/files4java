@@ -140,3 +140,78 @@ select t1.id,t2.id from tuser t1,tuseraddress t2 where (t1.id = t2.UserId)
 show variables like 'slow_query%';
 
 
+
+
+
+-- 数据库的数据位置
+show global variables like "%datadir%";
+
+-- 查看某表的索引
+SHOW INDEX FROM tuser;
+
+-- system <- const <- eq_ref <- ref <- range <- index <- all
+
+
+explain select * FrOM tuser where id >= 13141314 AND id <= 33141314;
+
+explain select tu.id FrOM tuser tu JOIN tuseraddress tua on (tu.id = tua.userid)
+
+explain select * FrOM tuser where id = 13141314;
+
+desc tuser
+
+-- 108
+SELECT id FROM tuser;
+
+-- 879
+select id from tuseraddress;
+
+select t1.id,t2.id from tuser t1,tuseraddress t2 where (t1.id = t2.UserId)
+
+
+-- 慢日志查询是否开启
+show variables like 'slow_query%';
+
+SET GLOBAL slow_query_log = FALSE
+
+-- 设置慢查询超时时间
+show variables like 'long%';
+
+SET GLOBAL long_query_time = FALSE
+-- 永久性开启慢查询,最好在配置文件中配置
+-- /etc/my.cnf -> 
+-- slow_query_log =1
+-- slow_query_log_file=/application/mysql/data/localhost-slow.log
+-- long_query_time = 1
+
+-- ----------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 总结
+
+-- 存储引擎
+	-- INNODB
+	-- myisam
+
+-- 索引是什么
+
+-- 慢查询如何打开
+
+-- INNODB的数据结构是什么
+
+-- 哪些优化方案
+	-- 1.创建索引
+		-- 主键索引
+		-- 复合索引
+		-- 聚合索引
+	-- 2.视图
+		-- 创建视图,筛选出需要的数据
+	-- 3.sql语句
+
+-- char和varchar区别
+
+-- utf-8的占的位数
+
+-- INNER JOIN和left join 和 right join区别
+
+-- 分库设计
+
+	
