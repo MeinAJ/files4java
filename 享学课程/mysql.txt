@@ -107,3 +107,36 @@ show variables like '%tx_isolation%';
 	-- set session transaction isolation level read uncommitted
 	-- 自动提交事务是开启的
 show variables like '%autocommit%'; 
+
+
+
+-- 数据库的数据位置
+show global variables like "%datadir%";
+
+-- 查看某表的索引
+SHOW INDEX FROM tuser;
+
+-- system <- const <- eq_ref <- ref <- range <- index <- all
+
+
+explain select * FrOM tuser where id >= 13141314 AND id <= 33141314;
+
+explain select tu.id FrOM tuser tu JOIN tuseraddress tua on (tu.id = tua.userid)
+
+explain select * FrOM tuser where id = 13141314;
+
+desc tuser
+
+-- 108
+SELECT id FROM tuser;
+
+-- 879
+select id from tuseraddress;
+
+select t1.id,t2.id from tuser t1,tuseraddress t2 where (t1.id = t2.UserId)
+
+
+-- 慢日志查询是否开启
+show variables like 'slow_query%';
+
+
