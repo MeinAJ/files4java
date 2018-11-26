@@ -21,4 +21,28 @@ linux中安装两种方式看一下
 linux中软件的卸载
 nginx.conf文件参数看一下
 日志切割
-nginx中的redirect和permanent待定对浏览器的区别是什么
+
+为什么开启了慢查询，insert语句不能被记录下来
+
+select * from test;
+
+show variables like "%query_time%"
+
+show variables like "%slow%"
+
+select * from product_info where id > 100000
+
+show variables like "%datadir%"
+
+insert into product_info values(123456789,"aj","aj");
+
+explain select * from product_info limit 0,10;
+
+-- mysql中的myisam和innodb的区别？
+-- redo和undo的作用
+-- hash索引是什么，什么存储引擎支持，有什么优缺点
+-- btree和b+tree的区别，对于范围检索来说，b+tree的好处
+-- 全文检索是怎么回事
+-- mysql的innodb支持的四种事务隔离级别，有什么区别
+-- mysql的间歇锁是啷个回事，有几种方式产生间歇锁
+-- mysql实现的读写分离原理吗，和存储引擎有什么关系？
