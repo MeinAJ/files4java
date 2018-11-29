@@ -1,0 +1,55 @@
+注解
+    @ComponentScan
+        @ComponentScan(value = "com.aj.enjoy",useDefaultFilters = false,includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION,classes = Controller.class)})
+            value:                                                  扫描的包
+            useDefaultFilters:                                      默认过滤器还是不是
+            includeFilters:                                         过滤规则
+                @ComponentScan.Filter(type = FilterType.ANNOTATION,classes = Controller.class)}
+                    type:ANNOTATION,CUSTOM,ASSIGNABLE_TYPE          什么方式过滤
+                        ANNOTATION:                                 什么注解
+                        CUSTOM:                                     自定义过滤规则
+                        ASSIGNABLE_TYPE:                            以注入的类类型
+    @Configuration
+    @Import
+        @Import({Pig.class, Cat.class})                             Pig和Cat都是被注入进容器的类
+        @Import({AJImportSelector,Cat.class})                       Cat都是被注入进容器的类,AJImportSelector是实现了ImportSelector的注入选择器,
+                                                                    在内部可以选择注入哪些类,根据全路径名
+        @Import({AJImportBeanDefinitionRegistrar,Cat.class})        Cat都是被注入进容器的类,AJImportBeanDefinitionRegistrar是实现了ImportBeanDefinitionRegistrar的注入选择器,
+                                                                    在内部可以选择注入哪些类,而是包装成BeanDefinition类注入
+    @Bean
+        @Bean("name")                                               name为方法名
+        @Bean()                                                     默认是方法名
+        @Bean(initMethod="init",destroyMethod="destroy")            init为初始化方法,destroy为销毁的逻辑
+    @Conditional
+        @Conditional(AJCondition.class)                             AJCondition实现Condition接口,定义什么规则,满足什么规则该类才能被注入容器中
+    @prototype
+    @Controller
+    @Component
+    @Service
+    @Repository
+
+
+
+    bean的创建过程
+        初始化->创建->销毁
+        有三种方式:
+            都是在创建Bean后,并属性赋值后做的事,以及Bean被容器前做的事情
+            1.@Bean(initMethod="init",destroyMethod="destroy"),在每个Bean后初始化,以及销毁时做的事
+            2.实现InitializingBean,DisposableBean接口,定义初始化逻辑和销毁时的逻辑
+            3.JSR250中的PostConstruct,Bean创建后的逻辑，PreDestroy,Bean被移除之前做的事情
+
+
+    后置处理(这里的初始化就是上面三种的初始化操作)
+    postProcessorBeforeInitialization:在初始化之前做的事
+    postProcessorAfterInitialization:在初始化后做的事
+        1.before........com.aj.enjoy.cap01.AJInitializingDestroyBean@233fe9b6.........AJInitializingDestroyBean
+          AJInitializingDestroyBean.....afterPropertiesSet.........
+          after.........com.aj.enjoy.cap01.AJInitializingDestroyBean@233fe9b6.........AJInitializingDestroyBean
+
+        2.before........com.aj.enjoy.cap01.AJJSR250@222114ba.........AJJSR250
+          AJJSR250_postConstruct...
+          after.........com.aj.enjoy.cap01.AJJSR250@222114ba.........AJJSR250
+
+        3.before........com.aj.enjoy.cap01.Person@1a04f701.........person
+          person....init....
+          after.........com.aj.enjoy.cap01.Person@1a04f701.........person

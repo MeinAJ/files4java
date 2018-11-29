@@ -46,3 +46,11 @@ explain select * from product_info limit 0,10;
 -- mysql的innodb支持的四种事务隔离级别，有什么区别
 -- mysql的间歇锁是啷个回事，有几种方式产生间歇锁
 -- mysql实现的读写分离原理吗，和存储引擎有什么关系？
+
+
+
+EXPLAIN
+select t1.desc from product_info t1 LEFT JOIN test t2 on (t1.id = t2.id) order by t1.id
+为什么是覆盖索引
+
+
