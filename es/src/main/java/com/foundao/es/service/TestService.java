@@ -12,8 +12,9 @@ import static java.lang.System.currentTimeMillis;
 public class TestService {
 
     @Test
-    public void search(QueryBuilder queryBuilder){
+    public void search(){
 
+        QueryBuilder queryBuilder=QueryBuilders.termsQuery("title","习近平");
         FunctionScoreQueryBuilder query = QueryBuilders.functionScoreQuery(queryBuilder,
                 ScoreFunctionBuilders.fieldValueFactorFunction("time_stamp").factor((1000/ ((float)currentTimeMillis())))).boostMode(CombineFunction.MULTIPLY);
         query.query();

@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="39373ad8-8006-47ba-9f7c-8d0253323623" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../SHJ.Java.BDTAPI" beforeDir="false" afterPath="$PROJECT_DIR$/../../SHJ.Java.BDTAPI" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../es.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/foundao/es/service/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/com/foundao/es/service/TestService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/core/target/" />
@@ -157,10 +161,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="63" />
-    <option name="y" value="81" />
-    <option name="width" value="1829" />
-    <option name="height" value="996" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -184,7 +188,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544626117825" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544626784371" />
     <property name="last_opened_file_path" value="D:/SHJ.Java.BDTAPI/shj" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
@@ -324,7 +328,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19083156" />
